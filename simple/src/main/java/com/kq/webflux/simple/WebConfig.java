@@ -13,8 +13,11 @@ public class WebConfig implements WebFluxConfigurer {
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//		registry.addResourceHandler("/resources/**").addResourceLocations("/public", "classpath:/static/")
+//				.setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
+
 		registry.addResourceHandler("/resources/**").addResourceLocations("/public", "classpath:/static/")
-				.setCacheControl(CacheControl.maxAge(365, TimeUnit.DAYS));
+				.setCacheControl(CacheControl.maxAge(1, TimeUnit.SECONDS));
 	}
 
 

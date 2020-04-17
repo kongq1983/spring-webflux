@@ -1,0 +1,36 @@
+
+spring:
+  application:
+    name: webmvc
+
+  mvc:
+#    static-path-pattern: /static/**
+#    static-path-pattern: /resources/**
+    #  profiles:
+    view:
+      prefix: /html/
+      suffix: .html
+#    active: dev
+
+#  spring.mvc.view.prefix=/pages/
+#  spring.mvc.view.suffix=.html
+
+
+
+
+server:
+  port: 10008
+  servlet:
+    context-path: /
+
+
+
+logging:
+  level:
+    root: INFO
+    org:
+      springframework:
+        web: DEBUG
+    com:
+      kq: DEBUG
+
