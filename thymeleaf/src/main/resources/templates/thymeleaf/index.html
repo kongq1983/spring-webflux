@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script src="js/jquery.js"></script>
+<!--<script src="https://cdn.bootcss.com/event-source-polyfill/0.0.9/eventsource.min.js"/>-->
+
+<script>
+$(document).ready(function(){
+	alert('ready');
+
+	$("#buttons0").click(function(){
+		var content = $('#myid').html();
+		alert('content='+content);
+		$('#myid').html(content+",hello!<br/>");
+	});
+
+	$("#buttons2").click(function(){
+
+		var source = new EventSource("/products3");	//生成EventSource对象，url必须同源
+		var len = 0;
+		source.onopen = function(){		//如果连接断开，还会自动重新连接
+			console.log("connection opend");
+		}
+		source.onmessage = function(event){	//event.data返回最新的消息
+			var data = event.data.substring(0);
+			len = data.length;
+			console.log(data);
+
+			var content = $('#myid2').html()+','+data+'<br/>';
+			$('#myid2').html(content);
+		}
+
+
+
+	});
+
+	$("#buttons3").click(function(){
+
+		var source = new EventSource("/schedule");	//生成EventSource对象，url必须同源
+		var len = 0;
+		source.onopen = function(){		//如果连接断开，还会自动重新连接
+			console.log("connection opend");
+		}
+		source.onmessage = function(event){	//event.data返回最新的消息
+			console.log('event:'+JSON.stringify(event))
+			var data = event.data.substring(0);
+			len = data.length;
+			console.log(data);
+
+			var content = $('#myid3').html()+','+data+'<br/>';
+			$('#myid3').html(content);
+		}
+
+	});
+
+	$("#buttons").click(function(){
+		var content = $('#myid').html();
+
+		var xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4){
+				result = xhr.responseText;
+				content = $('#myid').html();
+				$('#myid').html(content+",hello!<br/>");
+				console.log(result);
+				xhr.open('get', '/products3');	//在获得数据后重新向服务器发起请求
+				xhr.send(null);
+			}
+		}
+		xhr.open('get', '/products3');
+		xhr.send(null);
+
+		$('#myid').html(content+",hello!<br/>");
+	});
+
+	$("#buttonAjax").click(function(){
+		$.ajax({
+			url: "/products3",
+			//data: {name: 'jenny'},
+			//type: "POST",
+			//dataType: "json",
+			success: function(data) {
+				var content = $('#myid1').html();
+				content = content+",<br/>"+data;
+				// alert('content='+content);
+				$('#myid1').html(content);
+				// data = jQuery.parseJSON(data);  //dataType指明了返回数据为json类型，故不需要再反序列化
+			}
+		});
+	});
+
+});
+</script>
+
+
+</head>
+<body>
+	<h2>My Spring WebFlux3</h2>
+	<input type="button" id="buttons" value="button"/>
+	<input type="button" id="buttons2" value="FluxEventSource"/>
+	<input type="button" id="buttons3" value="MVCEventSource"/>
+	<input type="button" id="buttonAjax" value="buttonAjax"/>
+	<h2 id="buttons1">click</h2>
+	<div id="myid">
+
+	</div>
+
+	<div id="myid1">
+
+	</div>
+	<div id="myid2">
+
+	</div>
+	<div id="myid3">
+
+	</div>
+
+</body>
+</html>

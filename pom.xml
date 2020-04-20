@@ -11,6 +11,7 @@
     <modules>
         <module>simple</module>
         <module>webmvc</module>
+        <module>thymeleaf</module>
     </modules>
 
     <parent>
@@ -66,8 +67,21 @@
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
 
+
+
     </dependencies>
 
+    <dependencyManagement>
+        <dependencies>
+            <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.66</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
 
 
 
