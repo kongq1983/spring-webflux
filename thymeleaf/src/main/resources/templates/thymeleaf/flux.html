@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script src="js/jquery.js"></script>
+<!--<script src="https://cdn.bootcss.com/event-source-polyfill/0.0.9/eventsource.min.js"/>-->
+
+<script>
+$(document).ready(function(){
+	alert('ready');
+
+	$("#createNumber").click(function(){
+
+		var source = new EventSource("/flux/listener");	//生成EventSource对象，url必须同源
+		//var source = new EventSource("/createNumber2");	//生成EventSource对象，url必须同源
+		//var source = new EventSource("/products3");	//生成EventSource对象，url必须同源
+		// var source = new EventSource("/flux/createNumber1");	//生成EventSource对象，url必须同源
+		var len = 0;
+		source.onopen = function(){		//如果连接断开，还会自动重新连接
+			console.log("connection opend");
+		}
+		source.onmessage = function(event){	//event.data返回最新的消息
+			var data = event.data.substring(0);
+			len = data.length;
+			console.log(data);
+
+			var content = $('#createNumberDiv').html()+','+data+'<br/>';
+			$('#createNumberDiv').html(content);
+		}
+
+	});
+
+
+	$("#listener").click(function(){
+
+		var source = new EventSource("/flux/listener");	//生成EventSource对象，url必须同源
+		var len = 0;
+		source.onopen = function(){		//如果连接断开，还会自动重新连接
+			console.log("connection opend");
+		}
+		source.onmessage = function(event){	//event.data返回最新的消息
+			var data = event.data.substring(0);
+			len = data.length;
+			console.log(data);
+
+			var content = $('#listenerDiv').html()+','+data+'<br/>';
+			$('#listenerDiv').html(content);
+		}
+
+	});
+
+
+
+});
+</script>
+
+
+</head>
+<body>
+	<h2>My Spring WebFlux5</h2>
+	<input type="button" id="createNumber" value="createNumber"/>
+	<input type="button" id="listener" value="listener"/>
+	<!--<input type="button" id="buttons2" value="FluxEventSource"/>
+	<input type="button" id="buttons3" value="MVCEventSource"/>
+	<input type="button" id="buttonAjax" value="buttonAjax"/>-->
+	<div id="createNumberDiv">
+
+	</div>
+	<div id="listenerDiv">
+
+	</div>
+
+	<div id="myid1">
+
+	</div>
+	<div id="myid2">
+
+	</div>
+	<div id="myid3">
+
+	</div>
+
+</body>
+</html>

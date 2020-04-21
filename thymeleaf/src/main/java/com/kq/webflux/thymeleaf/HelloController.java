@@ -81,4 +81,24 @@ public class HelloController {
 
 	}
 
+
+	@GetMapping("/createNumber2")
+	public Flux<Integer> createNumber2() {
+
+		Flux<Integer> flux = Flux.create(sink-> {
+			for(int i=0;i<10;i++) {
+				sink.next(i);
+                try {
+                    TimeUnit.SECONDS.sleep(3);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+			}
+//            sink.complete();
+		});
+
+		return flux;
+
+	}
+
 }

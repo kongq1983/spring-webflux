@@ -47,4 +47,9 @@ public class AppMainThymeleaf {
 		return "index";
 	}
 
+	@GetMapping("/flux")
+	public String flux(String name) {
+		return "flux";
+	}
+
 }
