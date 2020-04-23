@@ -13,6 +13,7 @@
         <module>webmvc</module>
         <module>thymeleaf</module>
         <module>reactor</module>
+        <module>java8</module>
     </modules>
 
     <parent>
